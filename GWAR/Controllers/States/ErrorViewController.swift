@@ -30,10 +30,7 @@ class ErrorViewController: UIViewController {
     
     return label
   }()
-}
-
-// MARK: - General
-extension ErrorViewController {
+  
   func setupConstraints() {
     titleLabel.snp.makeConstraints { make in
       make.center.equalToSuperview()

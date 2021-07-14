@@ -13,7 +13,8 @@ class LoadingViewController: UIViewController {
     super.loadView()
     
     view = UIView()
-    
+    view.backgroundColor = .systemBackground
+
     view.addSubview(activityIndicatorView)
     
     setupConstraints()
@@ -25,10 +26,7 @@ class LoadingViewController: UIViewController {
     
     return activityIndicatorView
   }()
-}
-
-// MARK: - General
-extension LoadingViewController {
+  
   func setupConstraints() {
     activityIndicatorView.snp.makeConstraints { make in
       make.center.equalToSuperview()
