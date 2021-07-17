@@ -57,6 +57,8 @@ class GameView: UIView {
   // MARK: - Game Table View
   lazy var gameTableView: UITableView = {
     let tableView = UITableView()
+    tableView.estimatedRowHeight = 150.0
+    tableView.rowHeight = UITableView.automaticDimension
     
     tableView.register(GameTableViewCell.self, forCellReuseIdentifier: GameTableViewCell.reuseIdentifier)
     

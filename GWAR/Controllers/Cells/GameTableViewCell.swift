@@ -16,6 +16,7 @@ class GameTableViewCell: UITableViewCell {
     
     addSubview(containerView)
     containerView.snp.makeConstraints { make in
+      make.height.equalTo(100.0)
       make.top.leading.trailing.bottom.equalToSuperview()
     }
   }
@@ -56,7 +57,7 @@ class GameTableViewCell: UITableViewCell {
   
   lazy var gameImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.setRounded(radius: 8.0)
+    imageView.setRounded(radius: 5.0)
     
     return imageView
   }()

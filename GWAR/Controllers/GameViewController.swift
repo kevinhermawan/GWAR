@@ -78,10 +78,6 @@ extension GameViewController {
 
 // MARK: - Table View Delegate & Data Source
 extension GameViewController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 120.0
-  }
-  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return games.count
   }
