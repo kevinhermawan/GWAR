@@ -47,11 +47,12 @@ class AboutView: UIView {
   }()
   
   lazy var aboutTableView: UITableView = {
-    let tableView = UITableView(frame: .zero, style: .grouped)
+    let tableView = UITableView(frame: .zero, style: .insetGrouped)
     tableView.estimatedRowHeight = 100.0
     tableView.rowHeight = UITableView.automaticDimension
     
-    tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
+    let reuseIdentifier = ProfileTableViewCell.reuseIdentifier
+    tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     
     return tableView
   }()

@@ -16,8 +16,8 @@ class GameTableViewCell: UITableViewCell {
     
     addSubview(containerView)
     containerView.snp.makeConstraints { make in
-      make.height.equalTo(100.0)
-      make.top.leading.trailing.bottom.equalToSuperview()
+      make.top.bottom.equalToSuperview().inset(10)
+      make.leading.trailing.equalToSuperview().inset(20)
     }
   }
   
@@ -31,14 +31,14 @@ class GameTableViewCell: UITableViewCell {
     
     view.addSubview(containerLeftView)
     containerLeftView.snp.makeConstraints { make in
+      make.width.equalTo(130.0)
       make.top.leading.bottom.equalToSuperview()
-      make.width.equalTo(150.0)
     }
     
     view.addSubview(containerRightView)
     containerRightView.snp.makeConstraints { make in
+      make.leading.equalTo(containerLeftView.snp.trailing).offset(10)
       make.top.trailing.bottom.equalToSuperview()
-      make.leading.equalTo(containerLeftView.snp.trailing)
     }
     
     return view
@@ -47,15 +47,15 @@ class GameTableViewCell: UITableViewCell {
   lazy var containerLeftView: UIView = {
     let view = UIView()
     
-    view.addSubview(gameImageView)
-    gameImageView.snp.makeConstraints { make in
-      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 8))
+    view.addSubview(backgroundImageView)
+    backgroundImageView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
     }
     
     return view
   }()
   
-  lazy var gameImageView: UIImageView = {
+  lazy var backgroundImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.setRounded(radius: 5.0)
     
@@ -65,24 +65,21 @@ class GameTableViewCell: UITableViewCell {
   lazy var containerRightView: UIView = {
     let view = UIView()
     
-    view.addSubview(gameGenreLabel)
-    gameGenreLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(16)
-      make.leading.equalToSuperview().offset(8)
-      make.trailing.equalToSuperview().offset(-16)
+    view.addSubview(genreLabel)
+    genreLabel.snp.makeConstraints { make in
+      make.top.leading.trailing.equalToSuperview()
     }
     
-    view.addSubview(gameNameLabel)
-    gameNameLabel.snp.makeConstraints { make in
-      make.top.equalTo(gameGenreLabel.snp.bottom).offset(4)
-      make.leading.equalToSuperview().offset(8)
-      make.trailing.equalToSuperview().offset(-16)
+    view.addSubview(nameLabel)
+    nameLabel.snp.makeConstraints { make in
+      make.top.equalTo(genreLabel.snp.bottom).offset(4)
+      make.leading.trailing.equalToSuperview()
     }
     
     return view
   }()
   
-  lazy var gameGenreLabel: UILabel = {
+  lazy var genreLabel: UILabel = {
     let label = UILabel()
     label.textColor = .secondaryLabel
     label.font = UIFont.systemFont(ofSize: 15.0)
@@ -90,7 +87,7 @@ class GameTableViewCell: UITableViewCell {
     return label
   }()
   
-  lazy var gameNameLabel: UILabel = {
+  lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 2
     label.font = UIFont.boldSystemFont(ofSize: 20.0)

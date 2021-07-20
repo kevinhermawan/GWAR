@@ -10,32 +10,48 @@ import SnapKit
 
 class SearchView: UIView {
   
+  weak var tableViewDelegate: UITableViewDelegate? {
+    didSet {
+      tableView.delegate = self.tableViewDelegate
+    }
+  }
+  
+  weak var tableViewDataSource: UITableViewDataSource? {
+    didSet {
+      tableView.dataSource = self.tableViewDataSource
+    }
+  }
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     
     addSubview(containerView)
-    
-    setupContainerConstraints()
+    containerView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
   
-  func setupContainerConstraints() {
-    containerViewConstraint()
-  }
-  
   // MARK: - Container View
   lazy var containerView: UIView = {
     let view = UIView()
     
+    view.addSubview(tableView)
+    tableView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+    
     return view
   }()
   
-  func containerViewConstraint() {
-    containerView.snp.makeConstraints { make in
-      make.top.leading.trailing.bottom.equalToSuperview()
-    }
-  }
+  lazy var tableView: UITableView = {
+    let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    
+    tableView.register(GameGenreTableViewCell.self, forCellReuseIdentifier: GameGenreTableViewCell.reuseIdentifier)
+    
+    return tableView
+  }()
 }

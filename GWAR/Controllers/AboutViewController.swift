@@ -103,7 +103,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     let profileCell = tableView.dequeueReusableCell(withIdentifier: profileIdentifier, for: indexPath) as! ProfileTableViewCell
 
     let aboutCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-    aboutCell.contentView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    aboutCell.contentView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
 
     switch indexPath.section {
     case 0:
@@ -120,9 +120,8 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   func setProfileSectionCell(for cell: ProfileTableViewCell, indexPath: IndexPath) -> UITableViewCell {
     if let photoURLString = profile?.photo {
       let photoURL = URL(string: photoURLString)
-      let roundCornerImageProcessor = RoundCornerImageProcessor(cornerRadius: 140.0)
       
-      cell.profileImageView.kf.setImage(with: photoURL, options: [.processor(roundCornerImageProcessor)])
+      cell.profileImageView.kf.setImage(with: photoURL)
     }
     
     cell.nameLabel.text = profile?.name

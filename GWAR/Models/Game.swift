@@ -9,12 +9,12 @@ import Foundation
 
 struct Game: Codable {
   let id: Int
-  let slug: String
-  let name: String
-  let released: String
+  let slug: String?
+  let name: String?
+  let released: String?
   let backgroundImage: String?
-  let rating: Double
-  let ratings: [GameRating]
-  let platforms: [GamePlatform]
-  let genres: [GameGenre]
+  let genres: [GameGenre]?
+  let platforms: [GamePlatform]?
+  let rating: Double?
+  let ratings: [GameRating]?
 }

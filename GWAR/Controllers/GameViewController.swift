@@ -12,11 +12,14 @@ class GameViewController: UIViewController {
   
   private let loadingViewController = LoadingViewController()
   
-  private var gameView: GameView? {
+  private var games = [Game]()
+  
+  var isSearchMode = false
+  var gamesFromSearch = [Game]()
+  
+  var gameView: GameView? {
     return self.view as? GameView
   }
-  
-  private var games = [Game]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,27 +38,33 @@ class GameViewController: UIViewController {
     super.loadView()
     
     let view = GameView(frame: self.view.frame)
-    view.gameTableViewDelegate = self
-    view.gameTableViewDataSource = self
+    view.tableViewDelegate = self
+    view.tableViewDataSource = self
     
     self.view = view
+  }
+  
+  func addLoadingViewController() {
+    addViewControllerChild(loadingViewController)
+  }
+  
+  func removeLoadingViewController() {
+    removeViewControllerChild(loadingViewController)
   }
 }
 
 // MARK: - Data Fetching
 extension GameViewController {
   func fetchGames() {
-    addViewControllerChild(loadingViewController)
+    addLoadingViewController()
     
-    let task = URLSession.shared.dataTask(with: URLRequest.getGamesURL(page: 1)) { [weak self] data, _, error in
-      guard let strongSelf = self else {
-        return
-      }
+    let urlRequest = URLRequest.getGamesURL(page: 1, search: nil)
+    
+    let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
+      guard let strongSelf = self else { return }
       
       do {
-        guard let data = data else {
-          return
-        }
+        guard let data = data else { return }
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -64,8 +73,8 @@ extension GameViewController {
         
         DispatchQueue.main.async {
           strongSelf.games = decoded.results
-          strongSelf.gameView?.gameTableView.reloadData()
-          strongSelf.removeViewControllerChild(strongSelf.loadingViewController)
+          strongSelf.gameView?.tableView.reloadData()
+          strongSelf.removeLoadingViewController()
         }
       } catch {
         print("fetchGames - ERROR:", error)
@@ -79,18 +88,18 @@ extension GameViewController {
 // MARK: - Table View Delegate & Data Source
 extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if isSearchMode {
+      return gamesFromSearch.count
+    }
+    
     return games.count
-  }
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let identifier = GameTableViewCell.reuseIdentifier
     let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GameTableViewCell
     
-    let game = games[indexPath.row]
+    let game = isSearchMode ? gamesFromSearch[indexPath.row] : games[indexPath.row]
     
     if let backgroundImage = game.backgroundImage {
       let imageURL = URL(string: backgroundImage)
@@ -103,15 +112,19 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     return cell
   }
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
   func setGameTableViewCellImage(cell: GameTableViewCell, imageURL: URL?) {
-    cell.gameImageView.kf.indicatorType = .activity
-    cell.gameImageView.kf.setImage(with: imageURL)
+    cell.backgroundImageView.kf.indicatorType = .activity
+    cell.backgroundImageView.kf.setImage(with: imageURL)
   }
   
   func setGameTableViewCellLabels(cell: GameTableViewCell, game: Game) {
-    let genre = game.genres.map({ $0.name }).joined(separator: ", ")
+    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
     
-    cell.gameGenreLabel.text = genre
-    cell.gameNameLabel.text = game.name    
+    cell.genreLabel.text = genre
+    cell.nameLabel.text = game.name
   }
 }

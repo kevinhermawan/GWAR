@@ -58,6 +58,7 @@ class ProfileTableViewCell: UITableViewCell {
   
   lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.setRounded(radius: 5.0)
     
     return imageView
   }()

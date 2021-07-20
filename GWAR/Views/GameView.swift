@@ -10,15 +10,15 @@ import SnapKit
 
 class GameView: UIView {
   
-  weak var gameTableViewDelegate: UITableViewDelegate? {
+  weak var tableViewDelegate: UITableViewDelegate? {
     didSet {
-      self.gameTableView.delegate = gameTableViewDelegate
+      self.tableView.delegate = tableViewDelegate
     }
   }
   
-  weak var gameTableViewDataSource: UITableViewDataSource? {
+  weak var tableViewDataSource: UITableViewDataSource? {
     didSet {
-      self.gameTableView.dataSource = gameTableViewDataSource
+      self.tableView.dataSource = tableViewDataSource
     }
   }
   
@@ -26,48 +26,34 @@ class GameView: UIView {
     super.init(frame: frame)
     
     addSubview(containerView)
-    
-    setupConstraints()
+    containerView.snp.makeConstraints { make in
+      make.top.leading.trailing.bottom.equalToSuperview()
+    }
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
   
-  func setupConstraints() {
-    containerViewConstraint()
-    gameTableViewConstraint()
-  }
-  
-  // MARK: - Container View
+  // MARK: - Views
   lazy var containerView: UIView = {
     let view = UIView()
     
-    view.addSubview(gameTableView)
+    view.addSubview(tableView)
+    tableView.snp.makeConstraints { make in
+      make.top.leading.trailing.bottom.equalToSuperview()
+    }
     
     return view
   }()
   
-  func containerViewConstraint() {
-    containerView.snp.makeConstraints { make in
-      make.top.leading.trailing.bottom.equalToSuperview()
-    }
-  }
-  
-  // MARK: - Game Table View
-  lazy var gameTableView: UITableView = {
+  lazy var tableView: UITableView = {
     let tableView = UITableView()
-    tableView.estimatedRowHeight = 150.0
-    tableView.rowHeight = UITableView.automaticDimension
+    tableView.rowHeight = 100
     
-    tableView.register(GameTableViewCell.self, forCellReuseIdentifier: GameTableViewCell.reuseIdentifier)
+    let reuseIdentifier = GameTableViewCell.reuseIdentifier
+    tableView.register(GameTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     
     return tableView
   }()
-  
-  func gameTableViewConstraint() {
-    gameTableView.snp.makeConstraints { make in
-      make.top.leading.trailing.bottom.equalToSuperview()
-    }
-  }
 }
