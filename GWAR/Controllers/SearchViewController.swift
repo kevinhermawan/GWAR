@@ -57,6 +57,17 @@ class SearchViewController: UIViewController {
   }
 }
 
+// MARK: - Navigation
+extension SearchViewController {
+  func navigateToGameByGenre(genre: GameGenre) {
+    let vc = GameViewController()
+    vc.title = genre.name
+    vc.genreID = genre.id
+    
+    navigationController?.pushViewController(vc, animated: true)
+  }
+}
+
 // MARK: - Data Fetching
 extension SearchViewController {
   func fetchGenres() {
@@ -139,6 +150,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let genre = genres[indexPath.row]
+    
+    navigateToGameByGenre(genre: genre)
+    
     tableView.deselectRow(at: indexPath, animated: true)
   }
 }

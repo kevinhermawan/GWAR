@@ -8,12 +8,39 @@
 import Foundation
 
 extension URLRequest {
-  static func getGamesURL(page: Int, search: String?) -> URLRequest {
+  static func getGamesURL(page: Int) -> URLRequest {
     var components = URLComponents(string: "https://api.rawg.io/api/games")!
     
     components.queryItems = [
       URLQueryItem(name: "page", value: "\(page)"),
-      URLQueryItem(name: "search", value: search ?? ""),
+      URLQueryItem(name: "key", value: "")
+    ]
+    
+    let request = URLRequest(url: components.url!)
+    
+    return request
+  }
+  
+  static func getGamesURL(page: Int, search: String) -> URLRequest {
+    var components = URLComponents(string: "https://api.rawg.io/api/games")!
+    
+    components.queryItems = [
+      URLQueryItem(name: "page", value: "\(page)"),
+      URLQueryItem(name: "search", value: search),
+      URLQueryItem(name: "key", value: "")
+    ]
+    
+    let request = URLRequest(url: components.url!)
+    
+    return request
+  }
+  
+  static func getGamesURL(page: Int, genreID: Int) -> URLRequest {
+    var components = URLComponents(string: "https://api.rawg.io/api/games")!
+    
+    components.queryItems = [
+      URLQueryItem(name: "page", value: "\(page)"),
+      URLQueryItem(name: "genres", value: "\(genreID)"),
       URLQueryItem(name: "key", value: "")
     ]
     
