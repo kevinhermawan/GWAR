@@ -16,9 +16,7 @@ class ProfileTableViewCell: UITableViewCell {
         
     addSubview(containerView)
     containerView.snp.makeConstraints { make in
-      make.height.equalTo(50.0)
-      make.top.bottom.equalToSuperview().inset(8)
-      make.leading.trailing.equalToSuperview().inset(16)
+      make.edges.equalToSuperview()
     }
   }
   
@@ -32,13 +30,16 @@ class ProfileTableViewCell: UITableViewCell {
     
     view.addSubview(containerLeftView)
     containerLeftView.snp.makeConstraints { make in
-      make.top.leading.bottom.equalToSuperview()
+      make.top.equalToSuperview().offset(10)
+      make.leading.equalToSuperview().offset(20)
+      make.bottom.equalToSuperview().offset(-10)
+      make.centerY.equalToSuperview()
       make.width.equalTo(50.0)
     }
     
     view.addSubview(containerRightView)
     containerRightView.snp.makeConstraints { make in
-      make.leading.equalTo(containerLeftView.snp.trailing).offset(16)
+      make.leading.equalTo(containerLeftView.snp.trailing).offset(10)
       make.centerY.trailing.equalToSuperview()
     }
     
@@ -83,7 +84,7 @@ class ProfileTableViewCell: UITableViewCell {
   
   lazy var nameLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.boldSystemFont(ofSize: 20.0)
+    label.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
     
     return label
   }()

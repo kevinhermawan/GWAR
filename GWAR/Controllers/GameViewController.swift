@@ -87,7 +87,7 @@ extension GameViewController {
           } else {
             strongSelf.games = decoded.results
           }
-
+          
           strongSelf.gameView?.tableView.reloadData()
           strongSelf.removeLoadingViewController()
         }
@@ -140,6 +140,13 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let game = getGame(indexPathRow: indexPath.row)
+    
+    let vc = GameDetailsViewController()
+    vc.gameID = game.id
+    
+    navigationController?.pushViewController(vc, animated: true)
+    
     tableView.deselectRow(at: indexPath, animated: true)
   }
   

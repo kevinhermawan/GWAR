@@ -48,9 +48,10 @@ class SearchView: UIView {
   }()
   
   lazy var tableView: UITableView = {
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    let tableView = UITableView()
     
-    tableView.register(GameGenreTableViewCell.self, forCellReuseIdentifier: GameGenreTableViewCell.reuseIdentifier)
+    let reuseIdentifier = GameGenreTableViewCell.reuseIdentifier
+    tableView.register(GameGenreTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     
     return tableView
   }()

@@ -32,7 +32,7 @@ class SearchViewController: UIViewController {
     
     searchController.searchBar.delegate = self
     searchController.searchBar.placeholder = "Search games"
-    
+
     let searchResultsVC = searchController.searchResultsController as! GameViewController
     searchResultsVC.isSearchMode = true
     
@@ -54,17 +54,6 @@ class SearchViewController: UIViewController {
     view.tableViewDataSource = self
     
     self.view = view
-  }
-}
-
-// MARK: - Navigation
-extension SearchViewController {
-  func navigateToGameByGenre(genre: GameGenre) {
-    let vc = GameViewController()
-    vc.title = genre.name
-    vc.genreID = genre.id
-    
-    navigationController?.pushViewController(vc, animated: true)
   }
 }
 
@@ -151,8 +140,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let genre = genres[indexPath.row]
+
+    let vc = GameViewController()
+    vc.title = genre.name
+    vc.genreID = genre.id
     
-    navigateToGameByGenre(genre: genre)
+    navigationController?.pushViewController(vc, animated: true)
     
     tableView.deselectRow(at: indexPath, animated: true)
   }

@@ -81,12 +81,16 @@ extension AboutViewController {
 
 // MARK: - Table View Delegate & Data Source
 extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 3
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    if indexPath.section == 0 {
+      return 70
+    }
+    
+    return UITableView.automaticDimension
   }
   
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 3
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
