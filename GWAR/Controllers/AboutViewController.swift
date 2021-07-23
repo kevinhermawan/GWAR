@@ -104,50 +104,50 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let profileIdentifier = ProfileTableViewCell.reuseIdentifier
-    let profileCell = tableView.dequeueReusableCell(withIdentifier: profileIdentifier, for: indexPath) as! ProfileTableViewCell
+    let profileCell = tableView.dequeueReusableCell(withIdentifier: profileIdentifier, for: indexPath) as? ProfileTableViewCell
 
     let aboutCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
     aboutCell.contentView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
 
     switch indexPath.section {
     case 0:
-      return setProfileSectionCell(for: profileCell, indexPath: indexPath)
+      return setProfileSectionCell(cell: profileCell, indexPath: indexPath)
     case 1:
-      return setDetailsSectionCell(for: aboutCell, indexPath: indexPath)
+      return setDetailsSectionCell(cell: aboutCell, indexPath: indexPath)
     case 2:
-      return setSocialSectionCell(for: aboutCell, indexPath: indexPath)
+      return setSocialSectionCell(cell: aboutCell, indexPath: indexPath)
     default:
       return UITableViewCell()
     }
   }
   
-  func setProfileSectionCell(for cell: ProfileTableViewCell, indexPath: IndexPath) -> UITableViewCell {
+  func setProfileSectionCell(cell: ProfileTableViewCell?, indexPath: IndexPath) -> UITableViewCell {
     if let photoURLString = profile?.photo {
       let photoURL = URL(string: photoURLString)
       
-      cell.profileImageView.kf.setImage(with: photoURL)
+      cell?.profileImageView.kf.setImage(with: photoURL)
     }
     
-    cell.nameLabel.text = profile?.name
-    cell.bioLabel.text = profile?.bio
+    cell?.nameLabel.text = profile?.name
+    cell?.bioLabel.text = profile?.bio
     
-    return cell
+    return cell ?? UITableViewCell()
   }
   
-  func setDetailsSectionCell(for cell: UITableViewCell, indexPath: IndexPath) -> UITableViewCell {
-    cell.textLabel?.text = profile?.details
-    cell.textLabel?.numberOfLines = 0
+  func setDetailsSectionCell(cell: UITableViewCell?, indexPath: IndexPath) -> UITableViewCell {
+    cell?.textLabel?.text = profile?.details
+    cell?.textLabel?.numberOfLines = 0
     
-    return cell
+    return cell ?? UITableViewCell()
   }
   
-  func setSocialSectionCell(for cell: UITableViewCell, indexPath: IndexPath) -> UITableViewCell {
+  func setSocialSectionCell(cell: UITableViewCell?, indexPath: IndexPath) -> UITableViewCell {
     let social = profile?.socials[indexPath.row]
         
-    cell.textLabel?.text = social?.name
-    cell.detailTextLabel?.text = social?.url
-    cell.detailTextLabel?.textColor = .secondaryLabel
+    cell?.textLabel?.text = social?.name
+    cell?.detailTextLabel?.text = social?.url
+    cell?.detailTextLabel?.textColor = .secondaryLabel
     
-    return cell
+    return cell ?? UITableViewCell()
   }
 }

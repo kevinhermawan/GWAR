@@ -120,7 +120,7 @@ extension GameDetailsViewController {
       TableViewSection.Data(title: "Release Date", detail: releaseDate),
       TableViewSection.Data(title: "Developer", detail: developer),
       TableViewSection.Data(title: "Publisher", detail: publisher),
-      TableViewSection.Data(title: "Website", detail: website),
+      TableViewSection.Data(title: "Website", detail: website)
     ]
     
     tableViewData.append(section)
@@ -143,14 +143,14 @@ extension GameDetailsViewController: UITableViewDelegate, UITableViewDataSource 
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let identifier = GameDetailsTableViewCell.reuseIdentifier
-    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GameDetailsTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? GameDetailsTableViewCell
     
     let data = tableViewData[indexPath.section].data?[indexPath.row]
     
-    cell.textLabel?.text = data?.title
-    cell.detailTextLabel?.text = data?.detail
+    cell?.textLabel?.text = data?.title
+    cell?.detailTextLabel?.text = data?.detail
     
-    return cell
+    return cell ?? UITableViewCell()
   }
   
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

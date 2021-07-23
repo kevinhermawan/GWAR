@@ -33,8 +33,8 @@ class SearchViewController: UIViewController {
     searchController.searchBar.delegate = self
     searchController.searchBar.placeholder = "Search games"
 
-    let searchResultsVC = searchController.searchResultsController as! GameViewController
-    searchResultsVC.isSearchMode = true
+    let searchResultsVC = searchController.searchResultsController as? GameViewController
+    searchResultsVC?.isSearchMode = true
     
     tabBarController?.navigationItem.hidesSearchBarWhenScrolling = false
     tabBarController?.navigationItem.searchController = searchController
@@ -130,12 +130,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let identifier = GameGenreTableViewCell.reuseIdentifier
-    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GameGenreTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? GameGenreTableViewCell
     
     let genre = genres[indexPath.row]
-    cell.nameLabel.text = genre.name
+    cell?.nameLabel.text = genre.name
     
-    return cell
+    return cell ?? UITableViewCell()
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

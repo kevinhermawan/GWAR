@@ -15,9 +15,9 @@ class GameDetailsTableViewCell: UITableViewCell {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     
     textLabel?.textColor = .systemOrange
-    textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+    textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     
-    detailTextLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+    detailTextLabel?.font = UIFont.systemFont(ofSize: 15)
   }
   
   required init?(coder: NSCoder) {

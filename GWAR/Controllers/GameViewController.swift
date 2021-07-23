@@ -124,7 +124,7 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let identifier = GameTableViewCell.reuseIdentifier
-    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GameTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? GameTableViewCell
     
     let game = getGame(indexPathRow: indexPath.row)
     
@@ -136,7 +136,7 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     
     setGameTableViewCellLabels(cell: cell, game: game)
     
-    return cell
+    return cell ?? UITableViewCell()
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -150,15 +150,15 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     tableView.deselectRow(at: indexPath, animated: true)
   }
   
-  func setGameTableViewCellImage(cell: GameTableViewCell, imageURL: URL?) {
-    cell.backgroundImageView.kf.indicatorType = .activity
-    cell.backgroundImageView.kf.setImage(with: imageURL)
+  func setGameTableViewCellImage(cell: GameTableViewCell?, imageURL: URL?) {
+    cell?.backgroundImageView.kf.indicatorType = .activity
+    cell?.backgroundImageView.kf.setImage(with: imageURL)
   }
   
-  func setGameTableViewCellLabels(cell: GameTableViewCell, game: Game) {
+  func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
     let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
     
-    cell.genreLabel.text = genre
-    cell.nameLabel.text = game.name
+    cell?.genreLabel.text = genre
+    cell?.nameLabel.text = game.name
   }
 }
