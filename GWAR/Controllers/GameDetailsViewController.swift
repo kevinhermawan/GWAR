@@ -99,7 +99,9 @@ extension GameDetailsViewController {
   }
   
   func setTableViewSection1(gameDetails: GameDetails) {
-    let ratings = gameDetails.ratings?.map({ TableViewSection.Data(title: $0.title.capitalized, detail: "\($0.count)" ) })
+    let ratings = gameDetails.ratings?.map({
+      TableViewSection.Data(title: $0.title.capitalized, detail: "\($0.count)")
+    })
     
     var section = TableViewSection()
     section.title = "Ratings"
@@ -151,9 +153,5 @@ extension GameDetailsViewController: UITableViewDelegate, UITableViewDataSource 
     cell?.detailTextLabel?.text = data?.detail
     
     return cell ?? UITableViewCell()
-  }
-  
-  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
   }
 }

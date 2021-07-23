@@ -120,6 +120,7 @@ class GameDetailsView: UIView {
   lazy var tableView: UITableView = {
     let view = UITableView(frame: .zero, style: .grouped)
     view.isScrollEnabled = false
+    view.allowsSelection = false
     
     let reuseIdentifier = GameDetailsTableViewCell.reuseIdentifier
     view.register(GameDetailsTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)

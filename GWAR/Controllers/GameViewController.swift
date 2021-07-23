@@ -140,14 +140,18 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+
     let game = getGame(indexPathRow: indexPath.row)
     
     let vc = GameDetailsViewController()
     vc.gameID = game.id
     
-    navigationController?.pushViewController(vc, animated: true)
-    
-    tableView.deselectRow(at: indexPath, animated: true)
+    if isSearchMode {
+      presentingViewController?.navigationController?.pushViewController(vc, animated: true)
+    } else {
+      navigationController?.pushViewController(vc, animated: true)
+    }
   }
   
   func setGameTableViewCellImage(cell: GameTableViewCell?, imageURL: URL?) {
