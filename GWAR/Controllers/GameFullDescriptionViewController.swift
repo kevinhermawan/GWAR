@@ -16,14 +16,24 @@ class GameFullDescriptionViewController: UIViewController {
     title = "Description"
     
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissVC))
-
+    
     view.backgroundColor = .systemBackground
     
-    view.addSubview(descriptionLabel)
+    view.addSubview(scrollView)
+    scrollView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+    
+    scrollView.addSubview(containerView)
+    containerView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+      make.width.equalToSuperview()
+    }
+    
+    containerView.addSubview(descriptionLabel)
     descriptionLabel.snp.makeConstraints { make in
-      make.centerY.equalToSuperview()
-      make.leading.equalToSuperview().offset(20)
-      make.trailing.equalToSuperview().offset(-20)
+      let edgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 50, right: 20)
+      make.edges.equalToSuperview().inset(edgeInsets)
     }
   }
   
@@ -31,11 +41,23 @@ class GameFullDescriptionViewController: UIViewController {
     navigationController?.dismiss(animated: true)
   }
   
+  lazy var scrollView: UIScrollView = {
+    let view = UIScrollView()
+    
+    return view
+  }()
+  
+  lazy var containerView: UIView = {
+    let view = UIView()
+    
+    return view
+  }()
+  
   lazy var descriptionLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
     label.textAlignment = .center
-
+    
     return label
   }()
 }
