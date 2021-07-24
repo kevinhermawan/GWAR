@@ -57,9 +57,16 @@ class GameDetailsView: UIView {
       make.height.equalTo(230)
     }
     
+    view.addSubview(genreLabel)
+    genreLabel.snp.makeConstraints { make in
+      make.top.equalTo(backgroundImageView.snp.bottom).offset(16)
+      make.leading.equalToSuperview().offset(16)
+      make.trailing.equalToSuperview().offset(-16)
+    }
+    
     view.addSubview(nameLabel)
     nameLabel.snp.makeConstraints { make in
-      make.top.equalTo(backgroundImageView.snp.bottom).offset(16)
+      make.top.equalTo(genreLabel.snp.bottom).offset(8)
       make.leading.equalToSuperview().offset(16)
       make.trailing.equalToSuperview().offset(-16)
     }
@@ -92,6 +99,15 @@ class GameDetailsView: UIView {
     let imageView = UIImageView()
     
     return imageView
+  }()
+  
+  lazy var genreLabel: UILabel = {
+    let label = UILabel()
+    label.numberOfLines = 0
+    label.textColor = .secondaryLabel
+    label.font = UIFont.systemFont(ofSize: 15)
+
+    return label
   }()
   
   lazy var nameLabel: UILabel = {

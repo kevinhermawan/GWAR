@@ -90,6 +90,7 @@ extension GameDetailsViewController {
     }
     
     let firstRating = gameDetails.ratings?[0].title
+    gameDetailsView?.genreLabel.text = gameDetails.genres?.map({ $0.name }).joined(separator: ", ")
     gameDetailsView?.nameLabel.text = gameDetails.name.withRatingEmoticon(rating: firstRating)
     gameDetailsView?.descLabel.text = gameDetails.descriptionRaw
     
