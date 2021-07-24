@@ -148,7 +148,6 @@
 				0A2189D926AA8E4D004E93A4 /* GameFullDescriptionViewController.swift */,
 				0A5AAD72268EE78D0097E0A8 /* GameViewController.swift */,
 				0A5AAD8E268F4BD80097E0A8 /* SearchViewController.swift */,
-				0A12E4C7269F0F3300F6374F /* Cells */,
 				0A857F362691B96200DD1AE5 /* States */,
 			);
 			path = Controllers;
@@ -175,6 +174,7 @@
 		0A5AAD84268EE7D60097E0A8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A12E4C7269F0F3300F6374F /* Cells */,
 				0A5AAD94268F4C520097E0A8 /* AboutView.swift */,
 				0A2189C826A96C19004E93A4 /* GameDetailsView.swift */,
 				0A5AAD92268F4C3B0097E0A8 /* GameView.swift */,
