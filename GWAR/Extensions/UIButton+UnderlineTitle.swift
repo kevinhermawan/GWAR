@@ -10,9 +10,9 @@ import UIKit
 extension UIButton {
   func setUnderlineTitle(title: String) {
     let attributedString = NSAttributedString(string: NSLocalizedString(title, comment: ""), attributes: [
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0),
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),
       NSAttributedString.Key.foregroundColor: UIColor.systemGray,
-      NSAttributedString.Key.underlineStyle: 1.0
+      NSAttributedString.Key.underlineStyle: 1
     ])
     
     self.setAttributedTitle(attributedString, for: .normal)

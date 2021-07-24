@@ -97,7 +97,7 @@ class GameDetailsView: UIView {
   lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-    label.font = UIFont.systemFont(ofSize: 32.0, weight: .black)
+    label.font = UIFont.systemFont(ofSize: 32, weight: .black)
 
     return label
   }()
@@ -105,7 +105,7 @@ class GameDetailsView: UIView {
   lazy var descLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 4
-    label.font = UIFont.systemFont(ofSize: 17.0)
+    label.font = UIFont.systemFont(ofSize: 17)
 
     return label
   }()

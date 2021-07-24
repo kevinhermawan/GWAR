@@ -89,7 +89,8 @@ extension GameDetailsViewController {
       gameDetailsView?.backgroundImageView.kf.setImage(with: imageURL)
     }
     
-    gameDetailsView?.nameLabel.text = gameDetails.name
+    let firstRating = gameDetails.ratings?[0].title
+    gameDetailsView?.nameLabel.text = gameDetails.name.withRatingEmoticon(rating: firstRating)
     gameDetailsView?.descLabel.text = gameDetails.descriptionRaw
     
     setTableViewSection1(gameDetails: gameDetails)
@@ -99,9 +100,7 @@ extension GameDetailsViewController {
   }
   
   func setTableViewSection1(gameDetails: GameDetails) {
-    let ratings = gameDetails.ratings?.map({
-      TableViewSection.Data(title: $0.title.capitalized, detail: "\($0.count)")
-    })
+    let ratings = gameDetails.ratings?.map({ TableViewSection.Data(title: $0.title.capitalized, detail: "\($0.count)".withRatingEmoticon(rating: $0.title)) })
     
     var section = TableViewSection()
     section.title = "Ratings"
@@ -111,7 +110,7 @@ extension GameDetailsViewController {
   }
   
   func setTableViewSection2(gameDetails: GameDetails) {
-    let releaseDate = gameDetails.tba ? "TBA" : gameDetails.released
+    let releaseDate = gameDetails.released.formatReleaseDate(tba: gameDetails.tba)
     let developer = gameDetails.developers?.map({ $0.name }).joined(separator: ", ")
     let publisher = gameDetails.publishers?.map({ $0.name }).joined(separator: ", ")
     let website = gameDetails.website

@@ -44,6 +44,8 @@
 		0A857F382691B97300DD1AE5 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A857F372691B97300DD1AE5 /* LoadingViewController.swift */; };
 		0A857F3F2691BE4000DD1AE5 /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A857F3E2691BE4000DD1AE5 /* UIViewController+Child.swift */; };
 		0A857F412691DEF000DD1AE5 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A857F402691DEF000DD1AE5 /* ErrorViewController.swift */; };
+		0AB8BA4726ABF21900B4606A /* String+RatingEmoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8BA4626ABF21900B4606A /* String+RatingEmoticon.swift */; };
+		0AB8BA4926ABF7F200B4606A /* String+ReleaseDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8BA4826ABF7F200B4606A /* String+ReleaseDate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,8 @@
 		0A857F372691B97300DD1AE5 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		0A857F3E2691BE4000DD1AE5 /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		0A857F402691DEF000DD1AE5 /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
+		0AB8BA4626ABF21900B4606A /* String+RatingEmoticon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RatingEmoticon.swift"; sourceTree = "<group>"; };
+		0AB8BA4826ABF7F200B4606A /* String+ReleaseDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ReleaseDate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,8 @@
 				0A857F3E2691BE4000DD1AE5 /* UIViewController+Child.swift */,
 				0A12E4BD269F0E8D00F6374F /* URLRequest+RAWG.swift */,
 				0A2189D726AA8D30004E93A4 /* UIButton+UnderlineTitle.swift */,
+				0AB8BA4626ABF21900B4606A /* String+RatingEmoticon.swift */,
+				0AB8BA4826ABF7F200B4606A /* String+ReleaseDate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -332,11 +338,13 @@
 				0A12E4BE269F0E8D00F6374F /* URLRequest+RAWG.swift in Sources */,
 				0A12E4C4269F0F0400F6374F /* GamePlatform.swift in Sources */,
 				0A2189D626AA75E0004E93A4 /* TableViewSection.swift in Sources */,
+				0AB8BA4926ABF7F200B4606A /* String+ReleaseDate.swift in Sources */,
 				0A2189CD26A970A4004E93A4 /* GameDeveloper.swift in Sources */,
 				0A12E4C0269F0ECA00F6374F /* APIResponse.swift in Sources */,
 				0A5AAD73268EE78D0097E0A8 /* GameViewController.swift in Sources */,
 				0A2189C726A96BB7004E93A4 /* GameDetailsViewController.swift in Sources */,
 				0A857F3F2691BE4000DD1AE5 /* UIViewController+Child.swift in Sources */,
+				0AB8BA4726ABF21900B4606A /* String+RatingEmoticon.swift in Sources */,
 				0A12E4CD26A063F800F6374F /* Profile.swift in Sources */,
 				0A84805526A6B3E200A753F1 /* GameGenreTableViewCell.swift in Sources */,
 				0A12E4C9269F0F4700F6374F /* GameTableViewCell.swift in Sources */,

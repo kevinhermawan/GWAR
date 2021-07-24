@@ -34,7 +34,7 @@ class ProfileTableViewCell: UITableViewCell {
       make.leading.equalToSuperview().offset(20)
       make.bottom.equalToSuperview().offset(-10)
       make.centerY.equalToSuperview()
-      make.width.equalTo(50.0)
+      make.width.equalTo(50)
     }
     
     view.addSubview(containerRightView)
@@ -59,7 +59,7 @@ class ProfileTableViewCell: UITableViewCell {
   
   lazy var profileImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.setRounded(radius: 5.0)
+    imageView.setRounded(radius: 5)
     
     return imageView
   }()
@@ -84,7 +84,7 @@ class ProfileTableViewCell: UITableViewCell {
   
   lazy var nameLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
+    label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     
     return label
   }()
@@ -92,7 +92,7 @@ class ProfileTableViewCell: UITableViewCell {
   lazy var bioLabel: UILabel = {
     let label = UILabel()
     label.textColor = .secondaryLabel
-    label.font = UIFont.systemFont(ofSize: 15.0)
+    label.font = UIFont.systemFont(ofSize: 15)
     
     return label
   }()

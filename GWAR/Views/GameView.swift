@@ -49,7 +49,7 @@ class GameView: UIView {
   
   lazy var tableView: UITableView = {
     let tableView = UITableView()
-    tableView.rowHeight = 100
+    tableView.rowHeight = 140
     
     let reuseIdentifier = GameTableViewCell.reuseIdentifier
     tableView.register(GameTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)

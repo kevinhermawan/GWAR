@@ -161,8 +161,13 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   
   func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
     let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    let name = game.name.withRatingEmoticon(rating: game.ratings?[0].title)
+    let rating = "⭐ \(game.rating ?? 0.0)"
+    let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
     
     cell?.genreLabel.text = genre
-    cell?.nameLabel.text = game.name
+    cell?.nameLabel.text = name
+    cell?.ratingLabel.text = rating
+    cell?.releaseDateLabel.text = releaseDate
   }
 }
