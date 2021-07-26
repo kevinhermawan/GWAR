@@ -38,6 +38,7 @@ class SearchView: UIView {
   // MARK: - Container View
   lazy var containerView: UIView = {
     let view = UIView()
+    view.backgroundColor = .systemBackground
     
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in

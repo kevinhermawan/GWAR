@@ -49,6 +49,7 @@ class GameFullDescriptionViewController: UIViewController {
   
   lazy var containerView: UIView = {
     let view = UIView()
+    view.backgroundColor = .systemBackground
     
     return view
   }()

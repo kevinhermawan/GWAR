@@ -37,6 +37,7 @@ class AboutView: UIView {
   
   lazy var containerView: UIView = {
     let view = UIView()
+    view.backgroundColor = .systemBackground
     
     view.addSubview(aboutTableView)
     aboutTableView.snp.makeConstraints { make in

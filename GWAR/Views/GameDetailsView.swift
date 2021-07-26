@@ -50,6 +50,7 @@ class GameDetailsView: UIView {
   
   lazy var containerView: UIView = {
     let view = UIView()
+    view.backgroundColor = .systemBackground
     
     view.addSubview(backgroundImageView)
     backgroundImageView.snp.makeConstraints { make in
