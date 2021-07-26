@@ -140,6 +140,7 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     let game = getGame(indexPathRow: indexPath.row)
     
     let vc = GameDetailsViewController()
+    vc.hidesBottomBarWhenPushed = true
     vc.gameID = game.id
     
     if isSearchMode {
@@ -156,7 +157,7 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   
   func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
     let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
-    let name = game.name.withRatingEmoticon(rating: game.ratings?[0].title)
+    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
     let rating = "⭐ \(game.rating ?? 0.0)"
     let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
     
