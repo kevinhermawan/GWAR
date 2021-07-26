@@ -58,7 +58,8 @@ class GameTableViewCell: UITableViewCell {
   lazy var backgroundImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.setRounded(radius: 5)
-    
+    imageView.contentMode = .scaleAspectFill
+
     return imageView
   }()
   
