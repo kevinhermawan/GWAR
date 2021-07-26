@@ -14,10 +14,10 @@ extension String {
     }
     
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "YYYY-MM-dd"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     
     let date = dateFormatter.date(from: self)
-    dateFormatter.dateFormat = "dd MMM YYYY"
+    dateFormatter.dateFormat = "dd MMM yyyy"
     
     let result = dateFormatter.string(from: date ?? Date())
     
