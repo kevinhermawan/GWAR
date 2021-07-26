@@ -27,14 +27,9 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    fetchGames()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+    self.title = "Games"
     
-    tabBarController?.title = "Games"
-    tabBarController?.navigationController?.navigationBar.prefersLargeTitles = true
+    fetchGames()
   }
   
   override func loadView() {
@@ -141,7 +136,7 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-
+    
     let game = getGame(indexPathRow: indexPath.row)
     
     let vc = GameDetailsViewController()

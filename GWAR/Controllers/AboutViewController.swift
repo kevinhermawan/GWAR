@@ -21,14 +21,9 @@ class AboutViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    fetchProfile()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+    self.title = "About"
     
-    tabBarController?.title = "About"
-    tabBarController?.navigationController?.navigationBar.prefersLargeTitles = true
+    fetchProfile()
   }
   
   override func loadView() {

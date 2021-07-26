@@ -21,30 +21,19 @@ class SearchViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    fetchGenres()
-  }
-    
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    tabBarController?.title = "Search"
-    tabBarController?.navigationController?.navigationBar.prefersLargeTitles = true
+    self.title = "Search"
     
     searchController.searchBar.delegate = self
     searchController.searchBar.placeholder = "Search games"
     definesPresentationContext = true
-
+    
     let searchResultsVC = searchController.searchResultsController as? GameViewController
     searchResultsVC?.isSearchMode = true
     
-    tabBarController?.navigationItem.hidesSearchBarWhenScrolling = false
-    tabBarController?.navigationItem.searchController = searchController
-  }
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(true)
+    navigationItem.hidesSearchBarWhenScrolling = false
+    navigationItem.searchController = searchController
     
-    tabBarController?.navigationItem.searchController = nil
+    fetchGenres()
   }
   
   override func loadView() {
@@ -121,10 +110,6 @@ extension SearchViewController {
 
 // MARK: - Table View Delegate & Data Source
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return "Discover"
-  }
-  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return genres.count
   }
@@ -141,9 +126,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-
+    
     let genre = genres[indexPath.row]
-
+    
     let vc = GameViewController()
     vc.title = genre.name
     vc.genreID = genre.id
