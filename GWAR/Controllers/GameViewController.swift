@@ -6,24 +6,27 @@
 //
 
 import UIKit
+import CoreData
 import Kingfisher
 
 class GameViewController: UIViewController {
   
+  private let favoriteGameCoreData = FavoriteGameCoreData()
   private let loadingViewController = LoadingViewController()
   
   private var games = [Game]()
+  private var favoriteGameIds = [Int]()
   
   var gameView: GameView? {
     return self.view as? GameView
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    self.title = "Games"
-    
-    fetchGames()
+  override func viewDidAppear(_ animated: Bool) {
+    fetchGameFavoriteIds()
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    favoriteGameIds = []
   }
   
   override func loadView() {
@@ -36,12 +39,12 @@ class GameViewController: UIViewController {
     self.view = view
   }
   
-  func addLoadingViewController() {
-    addViewControllerChild(loadingViewController)
-  }
-  
-  func removeLoadingViewController() {
-    removeViewControllerChild(loadingViewController)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    self.title = "Games"
+    
+    fetchGames()
   }
 }
 
@@ -68,7 +71,7 @@ extension GameViewController {
           strongSelf.removeViewControllerChild(strongSelf.loadingViewController)
         }
       } catch {
-        print("fetchGames - ERROR:", error)
+        fatalError("fetchGames Error: \(error)")
       }
     }
     
@@ -99,6 +102,28 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     return cell ?? UITableViewCell()
   }
   
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let game = games[indexPath.row]
+    let isFavorited = favoriteGameIds.contains(game.id)
+    
+    let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (_, _, _) in
+      guard let strongSelf = self else { return }
+      
+      if isFavorited {
+        strongSelf.deleteGameFromFavorite(id: game.id)
+      } else {
+        strongSelf.saveGameToFavorite(game: game)
+      }
+    }
+    
+    favoriteAction.backgroundColor = .systemPink
+    favoriteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 25)).image { _ in
+      UIImage(systemName: isFavorited ? "heart.fill" : "heart")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 25))
+    }
+    
+    return UISwipeActionsConfiguration(actions: [favoriteAction])
+  }
+  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
@@ -117,14 +142,54 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
-    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    let gameFormatted = formatGameData(game: game)
+    
+    cell?.nameLabel.text = gameFormatted["name"] as? String
+    cell?.genreLabel.text = gameFormatted["genre"] as? String
+    cell?.ratingLabel.text = gameFormatted["rating"] as? String
+    cell?.releaseDateLabel.text = gameFormatted["releaseDate"] as? String
+  }
+  
+  func formatGameData(game: Game) -> [String: String?] {
     let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
+    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
     let rating = "⭐ \(game.rating ?? 0.0)"
     let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
     
-    cell?.genreLabel.text = genre
-    cell?.nameLabel.text = name
-    cell?.ratingLabel.text = rating
-    cell?.releaseDateLabel.text = releaseDate
+    return [
+      "name": name,
+      "genre": genre,
+      "rating": rating,
+      "releaseDate": releaseDate
+    ]
+  }
+}
+
+// MARK: - Core Data
+extension GameViewController {
+  func fetchGameFavoriteIds() {
+    let gameForCoreData = favoriteGameCoreData.retrieve()
+    
+    favoriteGameIds = gameForCoreData.map({ Int($0.id ?? 0) })
+  }
+  
+  func saveGameToFavorite(game: Game) {
+    var gameForCoreData = GameForCoreData()
+    gameForCoreData.id = Int32(game.id)
+    gameForCoreData.name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
+    gameForCoreData.genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    gameForCoreData.rating = "⭐ \(game.rating ?? 0.0)"
+    gameForCoreData.releaseDate = game.released?.formatReleaseDate(tba: game.tba)
+    gameForCoreData.backgroundImage = game.backgroundImage
+    
+    favoriteGameCoreData.save(game: gameForCoreData)
+    favoriteGameIds.append(game.id)
+    gameView?.tableView.reloadData()
+  }
+  
+  func deleteGameFromFavorite(id: Int) {
+    favoriteGameCoreData.delete(id: Int32(id))
+    favoriteGameIds.removeAll(where: { $0 == id })
+    gameView?.tableView.reloadData()
   }
 }
