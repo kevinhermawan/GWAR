@@ -1,32 +1,20 @@
 //
-//  GameViewController.swift
+//  GameSearchResultsViewController.swift
 //  GWAR
 //
-//  Created by Kevin Hermawan on 02/07/21.
+//  Created by Kevin Hermawan on 01/08/21.
 //
 
 import UIKit
-import Kingfisher
 
-class GameViewController: UIViewController {
+class GameSearchResultsViewController: UIViewController {
   
   private let loadingViewController = LoadingViewController()
   
   private var games = [Game]()
   
-  var genreID: Int?
-  var gamesByGenre = [Game]()
-  
   var gameView: GameView? {
     return self.view as? GameView
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    self.title = "Games"
-    
-    fetchGames()
   }
   
   override func loadView() {
@@ -38,30 +26,14 @@ class GameViewController: UIViewController {
     
     self.view = view
   }
-  
-  func addLoadingViewController() {
-    addViewControllerChild(loadingViewController)
-  }
-  
-  func removeLoadingViewController() {
-    removeViewControllerChild(loadingViewController)
-  }
 }
 
 // MARK: - Data Fetching
-extension GameViewController {
-  func getFetchGamesURLRequest() -> URLRequest {
-    if let genreID = genreID {
-      return URLRequest.getGamesURL(page: 1, genreID: genreID)
-    }
+extension GameSearchResultsViewController {
+  func fetchGames(searchValue: String) {
+    addViewControllerChild(loadingViewController)
     
-    return URLRequest.getGamesURL(page: 1)
-  }
-  
-  func fetchGames() {
-    addLoadingViewController()
-    
-    let urlRequest = getFetchGamesURLRequest()
+    let urlRequest = URLRequest.getGamesURL(page: 1, search: searchValue)
     let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
       guard let strongSelf = self else { return }
       
@@ -74,14 +46,9 @@ extension GameViewController {
         let decoded = try decoder.decode(APIResponse<[Game]>.self, from: data)
         
         DispatchQueue.main.async {
-          if strongSelf.genreID != nil {
-            strongSelf.gamesByGenre = decoded.results
-          } else {
-            strongSelf.games = decoded.results
-          }
-          
+          strongSelf.games = decoded.results
           strongSelf.gameView?.tableView.reloadData()
-          strongSelf.removeLoadingViewController()
+          strongSelf.removeViewControllerChild(strongSelf.loadingViewController)
         }
       } catch {
         print("fetchGames - ERROR:", error)
@@ -93,28 +60,16 @@ extension GameViewController {
 }
 
 // MARK: - Table View Delegate & Data Source
-extension GameViewController: UITableViewDelegate, UITableViewDataSource {
+extension GameSearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if genreID != nil {
-      return gamesByGenre.count
-    }
-    
     return games.count
-  }
-  
-  func getGame(indexPathRow: Int) -> Game {
-    if genreID != nil {
-      return gamesByGenre[indexPathRow]
-    }
-    
-    return games[indexPathRow]
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let identifier = GameTableViewCell.reuseIdentifier
     let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? GameTableViewCell
     
-    let game = getGame(indexPathRow: indexPath.row)
+    let game = games[indexPath.row]
     
     if let backgroundImage = game.backgroundImage {
       let imageURL = URL(string: backgroundImage)
@@ -130,13 +85,13 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let game = getGame(indexPathRow: indexPath.row)
-    
     let vc = GameDetailsViewController()
     vc.hidesBottomBarWhenPushed = true
+    
+    let game = games[indexPath.row]
     vc.gameID = game.id
     
-    navigationController?.pushViewController(vc, animated: true)
+    presentingViewController?.navigationController?.pushViewController(vc, animated: true)
   }
   
   func setGameTableViewCellImage(cell: GameTableViewCell?, imageURL: URL?) {

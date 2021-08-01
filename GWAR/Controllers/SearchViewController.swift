@@ -10,7 +10,7 @@ import UIKit
 class SearchViewController: UIViewController {
   
   private let loadingViewController = LoadingViewController()
-  private let searchController = UISearchController(searchResultsController: GameViewController())
+  private let searchController = UISearchController(searchResultsController: GameSearchResultsViewController())
   
   private var searchView: SearchView? {
     return self.view as? SearchView
@@ -26,9 +26,6 @@ class SearchViewController: UIViewController {
     searchController.searchBar.delegate = self
     searchController.searchBar.placeholder = "Search games"
     definesPresentationContext = true
-    
-    let searchResultsVC = searchController.searchResultsController as? GameViewController
-    searchResultsVC?.isSearchMode = true
     
     navigationItem.hidesSearchBarWhenScrolling = false
     navigationItem.searchController = searchController
@@ -75,37 +72,6 @@ extension SearchViewController {
     
     task.resume()
   }
-  
-  func fetchSearch(searchValue: String) {
-    let searchResultsVC = self.searchController.searchResultsController as? GameViewController
-    searchResultsVC?.addLoadingViewController()
-    
-    let urlRequest = URLRequest.getGamesURL(page: 1, search: searchValue)
-    
-    let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-      guard let strongSelf = self else { return }
-      
-      do {
-        guard let data = data else { return}
-        
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let decoded = try decoder.decode(APIResponse<[Game]>.self, from: data)
-        
-        DispatchQueue.main.async {
-          let searchResultsVC = strongSelf.searchController.searchResultsController as? GameViewController
-          searchResultsVC?.gamesFromSearch = decoded.results
-          searchResultsVC?.gameView?.tableView.reloadData()
-          searchResultsVC?.removeLoadingViewController()
-        }
-      } catch {
-        print("fetchSearch - ERROR:", error)
-      }
-    }
-    
-    task.resume()
-  }
 }
 
 // MARK: - Table View Delegate & Data Source
@@ -143,7 +109,8 @@ extension SearchViewController: UISearchBarDelegate {
     searchBar.resignFirstResponder()
     
     if let searchValue = searchBar.text {
-      fetchSearch(searchValue: searchValue)
+      let searchResultsVC = self.searchController.searchResultsController as? GameSearchResultsViewController
+      searchResultsVC?.fetchGames(searchValue: searchValue)
     }
   }
 }
