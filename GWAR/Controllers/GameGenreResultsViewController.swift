@@ -1,17 +1,17 @@
 //
-//  GameViewController.swift
+//  GameGenreResultsViewController.swift
 //  GWAR
 //
-//  Created by Kevin Hermawan on 02/07/21.
+//  Created by Kevin Hermawan on 01/08/21.
 //
 
 import UIKit
-import Kingfisher
 
-class GameViewController: UIViewController {
+class GameGenreResultsViewController: UIViewController {
   
   private let loadingViewController = LoadingViewController()
   
+  var genre: GameGenre?
   private var games = [Game]()
   
   var gameView: GameView? {
@@ -21,7 +21,7 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.title = "Games"
+    self.title = genre?.name
     
     fetchGames()
   }
@@ -35,22 +35,14 @@ class GameViewController: UIViewController {
     
     self.view = view
   }
-  
-  func addLoadingViewController() {
-    addViewControllerChild(loadingViewController)
-  }
-  
-  func removeLoadingViewController() {
-    removeViewControllerChild(loadingViewController)
-  }
 }
 
 // MARK: - Data Fetching
-extension GameViewController {
+extension GameGenreResultsViewController {
   func fetchGames() {
     addViewControllerChild(loadingViewController)
     
-    let urlRequest = URLRequest.getGamesURL(page: 1)
+    let urlRequest = URLRequest.getGamesURL(page: 1, genreID: genre?.id ?? 0)
     let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
       guard let strongSelf = self else { return }
       
@@ -77,7 +69,7 @@ extension GameViewController {
 }
 
 // MARK: - Table View Delegate & Data Source
-extension GameViewController: UITableViewDelegate, UITableViewDataSource {
+extension GameGenreResultsViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return games.count
   }

@@ -93,11 +93,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let genre = genres[indexPath.row]
+    let vc = GameGenreResultsViewController()
     
-    let vc = GameViewController()
-    vc.title = genre.name
-    vc.genreID = genre.id
+    let genre = genres[indexPath.row]
+    vc.genre = genre
     
     navigationController?.pushViewController(vc, animated: true)
   }
