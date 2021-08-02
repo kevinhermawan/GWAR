@@ -10,7 +10,10 @@ import Kingfisher
 
 class GameDetailsViewController: UIViewController {
   
+  private let favoriteGameCoreData = FavoriteGameCoreData()
   private let loadingVC = LoadingViewController()
+  
+  private var isFavorited = false
   
   var gameID: Int?
   var gameDetails: GameDetails?
@@ -26,6 +29,7 @@ class GameDetailsViewController: UIViewController {
     
     navigationItem.largeTitleDisplayMode = .never
     
+    checkIsFavorited()
     fetchGameDetails()
   }
   
@@ -47,6 +51,25 @@ class GameDetailsViewController: UIViewController {
     let vc = UINavigationController(rootViewController: rootVC)
     
     navigationController?.present(vc, animated: true)
+  }
+  
+  @objc func handleFavorite() {
+    if isFavorited {
+      deleteGameFromFavorite()
+    } else {
+      saveGameToFavorite()
+    }
+  }
+  
+  func setupFavoriteBarButtonItem(favorite: Bool) {
+    let favoriteIcon = UIImage(systemName: favorite ? "heart.fill" : "heart")
+    
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      image: favoriteIcon,
+      style: .plain,
+      target: self,
+      action: #selector(handleFavorite)
+    )
   }
 }
 
@@ -115,7 +138,7 @@ extension GameDetailsViewController {
     let developer = gameDetails.developers?.map({ $0.name }).joined(separator: ", ")
     let publisher = gameDetails.publishers?.map({ $0.name }).joined(separator: ", ")
     let website = gameDetails.website
-
+    
     var section = TableViewSection()
     section.title = "Info"
     section.data = [
@@ -153,5 +176,45 @@ extension GameDetailsViewController: UITableViewDelegate, UITableViewDataSource 
     cell?.detailTextLabel?.text = data?.detail
     
     return cell ?? UITableViewCell()
+  }
+}
+
+// MARK: - Core Data
+extension GameDetailsViewController {
+  func checkIsFavorited() {
+    guard let id = gameID else { return }
+    
+    let gameForCoreData = favoriteGameCoreData.retrieveById(id: id)
+    let favorited = gameForCoreData.id != nil
+    
+    isFavorited = favorited
+    setupFavoriteBarButtonItem(favorite: favorited)
+  }
+  
+  func saveGameToFavorite() {
+    let game = Game(
+      id: gameDetails?.id ?? 0,
+      name: gameDetails?.name ?? "",
+      backgroundImage: gameDetails?.backgroundImage,
+      tba: gameDetails?.tba ?? false,
+      released: gameDetails?.released,
+      genres: gameDetails?.genres,
+      rating: gameDetails?.rating,
+      ratings: gameDetails?.ratings
+    )
+    
+    favoriteGameCoreData.save(game: game)
+    
+    isFavorited = true
+    setupFavoriteBarButtonItem(favorite: true)
+  }
+  
+  func deleteGameFromFavorite() {
+    guard let id = gameID else { return }
+    
+    favoriteGameCoreData.delete(id: Int32(id))
+    
+    isFavorited = false
+    setupFavoriteBarButtonItem(favorite: false)
   }
 }

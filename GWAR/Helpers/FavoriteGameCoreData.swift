@@ -61,6 +61,28 @@ class FavoriteGameCoreData {
     return games
   }
   
+  func retrieveById(id: Int) -> GameForCoreData {
+    var game = GameForCoreData()
+    
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return game }
+    
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteGame")
+    fetchRequest.predicate = NSPredicate(format: "id == \(id)")
+    fetchRequest.fetchLimit = 1
+    
+    let obj = try? managedContext.fetch(fetchRequest).first as? NSManagedObject
+    
+    game.id = obj?.value(forKey: "id") as? Int32
+    game.name = obj?.value(forKey: "name") as? String
+    game.genre = obj?.value(forKey: "genre") as? String
+    game.rating = obj?.value(forKey: "rating") as? String
+    game.releaseDate = obj?.value(forKey: "releaseDate") as? String
+    game.backgroundImage = obj?.value(forKey: "backgroundImage") as? String
+    
+    return game
+  }
+  
   func delete(id: Int32) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     
