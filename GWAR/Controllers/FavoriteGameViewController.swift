@@ -12,6 +12,7 @@ class FavoriteGameViewController: UIViewController {
   
   private let favoriteGameCoreData = FavoriteGameCoreData()
   private let loadingViewController = LoadingViewController()
+  private let favoriteEmptyViewController = FavoriteEmptyViewController()
   
   private var games = [GameForCoreData]()
   
@@ -38,7 +39,10 @@ class FavoriteGameViewController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    games = favoriteGameCoreData.retrieve()
+    let gamesFromCoreData = favoriteGameCoreData.retrieve()
+    games = gamesFromCoreData
+        
+    checkSizeOfGames()
     gameView?.tableView.reloadData()
   }
   
@@ -46,6 +50,14 @@ class FavoriteGameViewController: UIViewController {
     super.viewDidDisappear(animated)
     
     games = []
+  }
+  
+  func checkSizeOfGames() {
+    if games.count < 1 {
+      addViewControllerChild(favoriteEmptyViewController)
+    } else {
+      removeViewControllerChild(favoriteEmptyViewController)
+    }
   }
 }
 
@@ -85,6 +97,7 @@ extension FavoriteGameViewController: UITableViewDelegate, UITableViewDataSource
       if let gameID = game.id {
         strongSelf.favoriteGameCoreData.delete(id: gameID)
         strongSelf.games.removeAll(where: { $0.id == gameID })
+        strongSelf.checkSizeOfGames()
         strongSelf.gameView?.tableView.deleteRows(at: [indexPath], with: .automatic)
       }
     }
