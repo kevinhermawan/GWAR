@@ -94,6 +94,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     tableView.deselectRow(at: indexPath, animated: true)
     
     let vc = GameGenreResultsViewController()
+    vc.hidesBottomBarWhenPushed = true
     
     let genre = genres[indexPath.row]
     vc.genre = genre

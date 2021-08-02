@@ -29,12 +29,10 @@ class GameSearchResultsViewController: UIViewController {
     self.view = view
   }
   
-  override func viewDidAppear(_ animated: Bool) {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
     retrieveGameFavoriteIds()
-  }
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    favoriteGameIds = []
   }
 }
 

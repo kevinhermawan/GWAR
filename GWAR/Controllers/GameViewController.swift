@@ -22,7 +22,7 @@ class GameViewController: UIViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    fetchGameFavoriteIds()
+    retrieveGameFavoriteIds()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -94,10 +94,19 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     if let backgroundImage = game.backgroundImage {
       let imageURL = URL(string: backgroundImage)
       
-      setGameTableViewCellImage(cell: cell, imageURL: imageURL)
+      cell?.backgroundImageView.kf.indicatorType = .activity
+      cell?.backgroundImageView.kf.setImage(with: imageURL)
     }
     
-    setGameTableViewCellLabels(cell: cell, game: game)
+    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
+    let rating = "⭐ \(game.rating ?? 0.0)"
+    let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
+    
+    cell?.genreLabel.text = genre
+    cell?.nameLabel.text = name
+    cell?.ratingLabel.text = rating
+    cell?.releaseDateLabel.text = releaseDate
     
     return cell ?? UITableViewCell()
   }
@@ -135,28 +144,11 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
     
     navigationController?.pushViewController(vc, animated: true)
   }
-  
-  func setGameTableViewCellImage(cell: GameTableViewCell?, imageURL: URL?) {
-    cell?.backgroundImageView.kf.indicatorType = .activity
-    cell?.backgroundImageView.kf.setImage(with: imageURL)
-  }
-  
-  func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
-    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
-    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
-    let rating = "⭐ \(game.rating ?? 0.0)"
-    let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
-    
-    cell?.genreLabel.text = genre
-    cell?.nameLabel.text = name
-    cell?.ratingLabel.text = rating
-    cell?.releaseDateLabel.text = releaseDate
-  }
 }
 
 // MARK: - Core Data
 extension GameViewController {
-  func fetchGameFavoriteIds() {
+  func retrieveGameFavoriteIds() {
     let gameForCoreData = favoriteGameCoreData.retrieve()
     
     favoriteGameIds = gameForCoreData.map({ Int($0.id ?? 0) })
