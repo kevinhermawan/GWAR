@@ -26,6 +26,7 @@
 		0A2189D826AA8D30004E93A4 /* UIButton+UnderlineTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2189D726AA8D30004E93A4 /* UIButton+UnderlineTitle.swift */; };
 		0A2189DA26AA8E4D004E93A4 /* GameFullDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2189D926AA8E4D004E93A4 /* GameFullDescriptionViewController.swift */; };
 		0A3440F426B7B43100D79505 /* FavoriteEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3440F326B7B43100D79505 /* FavoriteEmptyViewController.swift */; };
+		0A3440F626B7BA5000D79505 /* RAWG-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3440F526B7BA5000D79505 /* RAWG-Info.plist */; };
 		0A34F81B269C952A00BD3A23 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0A34F81A269C952A00BD3A23 /* Kingfisher */; };
 		0A5AAD6F268EE78D0097E0A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5AAD6E268EE78D0097E0A8 /* AppDelegate.swift */; };
 		0A5AAD71268EE78D0097E0A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5AAD70268EE78D0097E0A8 /* SceneDelegate.swift */; };
@@ -74,6 +75,7 @@
 		0A2189D726AA8D30004E93A4 /* UIButton+UnderlineTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UnderlineTitle.swift"; sourceTree = "<group>"; };
 		0A2189D926AA8E4D004E93A4 /* GameFullDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFullDescriptionViewController.swift; sourceTree = "<group>"; };
 		0A3440F326B7B43100D79505 /* FavoriteEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmptyViewController.swift; sourceTree = "<group>"; };
+		0A3440F526B7BA5000D79505 /* RAWG-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RAWG-Info.plist"; sourceTree = "<group>"; };
 		0A5AAD6B268EE78D0097E0A8 /* GWAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GWAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5AAD6E268EE78D0097E0A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A5AAD70268EE78D0097E0A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				0A5AAD77268EE7920097E0A8 /* Assets.xcassets */,
 				0A5AAD79268EE7920097E0A8 /* LaunchScreen.storyboard */,
 				0A5AAD7C268EE7920097E0A8 /* Info.plist */,
+				0A3440F526B7BA5000D79505 /* RAWG-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A5AAD7B268EE7920097E0A8 /* LaunchScreen.storyboard in Resources */,
+				0A3440F626B7BA5000D79505 /* RAWG-Info.plist in Resources */,
 				0A5AAD78268EE7920097E0A8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

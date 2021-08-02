@@ -9,9 +9,19 @@ import Foundation
 
 extension URLRequest {
   private static func apiKeyQueryItem() -> URLQueryItem {
-    return URLQueryItem(name: "key", value: "")
-  }
+    guard let filePath = Bundle.main.path(forResource: "RAWG-Info", ofType: "plist") else {
+      fatalError("Couldn't find file 'RAWG-Info.plist'.")
+    }
     
+    let plist = NSDictionary(contentsOfFile: filePath)
+    
+    guard let value = plist?.object(forKey: "API_KEY") as? String else {
+      fatalError("Couldn't find key 'API_KEY' in 'RAWG-Info.plist'.")
+    }
+    
+    return URLQueryItem(name: "key", value: value)
+  }
+  
   static func getGamesURL(page: Int) -> URLRequest {
     var components = URLComponents(string: "https://api.rawg.io/api/games")!
     components.queryItems = [
