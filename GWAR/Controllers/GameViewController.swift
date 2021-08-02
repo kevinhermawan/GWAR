@@ -142,26 +142,15 @@ extension GameViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func setGameTableViewCellLabels(cell: GameTableViewCell?, game: Game) {
-    let gameFormatted = formatGameData(game: game)
-    
-    cell?.nameLabel.text = gameFormatted["name"] as? String
-    cell?.genreLabel.text = gameFormatted["genre"] as? String
-    cell?.ratingLabel.text = gameFormatted["rating"] as? String
-    cell?.releaseDateLabel.text = gameFormatted["releaseDate"] as? String
-  }
-  
-  func formatGameData(game: Game) -> [String: String?] {
-    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
     let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
     let rating = "⭐ \(game.rating ?? 0.0)"
     let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
     
-    return [
-      "name": name,
-      "genre": genre,
-      "rating": rating,
-      "releaseDate": releaseDate
-    ]
+    cell?.genreLabel.text = genre
+    cell?.nameLabel.text = name
+    cell?.ratingLabel.text = rating
+    cell?.releaseDateLabel.text = releaseDate
   }
 }
 
@@ -174,15 +163,7 @@ extension GameViewController {
   }
   
   func saveGameToFavorite(game: Game) {
-    var gameForCoreData = GameForCoreData()
-    gameForCoreData.id = Int32(game.id)
-    gameForCoreData.name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
-    gameForCoreData.genre = game.genres?.map({ $0.name }).joined(separator: ", ")
-    gameForCoreData.rating = "⭐ \(game.rating ?? 0.0)"
-    gameForCoreData.releaseDate = game.released?.formatReleaseDate(tba: game.tba)
-    gameForCoreData.backgroundImage = game.backgroundImage
-    
-    favoriteGameCoreData.save(game: gameForCoreData)
+    favoriteGameCoreData.save(game: game)
     favoriteGameIds.append(game.id)
     gameView?.tableView.reloadData()
   }

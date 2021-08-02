@@ -9,19 +9,26 @@ import UIKit
 import CoreData
 
 class FavoriteGameCoreData {
-  func save(game: GameForCoreData) {
+  func save(game: Game) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     
     let managedContext = appDelegate.persistentContainer.viewContext
     let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
     let obj = NSManagedObject(entity: entity, insertInto: managedContext)
     
-    obj.setValue(game.id, forKey: "id")
-    obj.setValue(game.name, forKey: "name")
-    obj.setValue(game.genre, forKey: "genre")
-    obj.setValue(game.rating, forKey: "rating")
-    obj.setValue(game.releaseDate, forKey: "releaseDate")
-    obj.setValue(game.backgroundImage, forKey: "backgroundImage")
+    let id = Int32(game.id)
+    let name = game.name.withRatingEmoticon(rating: game.ratings?.first?.title)
+    let genre = game.genres?.map({ $0.name }).joined(separator: ", ")
+    let rating = "⭐ \(game.rating ?? 0.0)"
+    let releaseDate = game.released?.formatReleaseDate(tba: game.tba)
+    let backgroundImage = game.backgroundImage
+    
+    obj.setValue(id, forKey: "id")
+    obj.setValue(name, forKey: "name")
+    obj.setValue(genre, forKey: "genre")
+    obj.setValue(rating, forKey: "rating")
+    obj.setValue(releaseDate, forKey: "releaseDate")
+    obj.setValue(backgroundImage, forKey: "backgroundImage")
     
     do {
       try managedContext.save()
