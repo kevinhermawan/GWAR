@@ -25,7 +25,7 @@
 		0A2189D626AA75E0004E93A4 /* TableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2189D526AA75E0004E93A4 /* TableViewSection.swift */; };
 		0A2189D826AA8D30004E93A4 /* UIButton+UnderlineTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2189D726AA8D30004E93A4 /* UIButton+UnderlineTitle.swift */; };
 		0A2189DA26AA8E4D004E93A4 /* GameFullDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2189D926AA8E4D004E93A4 /* GameFullDescriptionViewController.swift */; };
-		0A3440F426B7B43100D79505 /* FavoriteEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3440F326B7B43100D79505 /* FavoriteEmptyViewController.swift */; };
+		0A3440F426B7B43100D79505 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3440F326B7B43100D79505 /* EmptyViewController.swift */; };
 		0A3440F626B7BA5000D79505 /* RAWG-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3440F526B7BA5000D79505 /* RAWG-Info.plist */; };
 		0A34F81B269C952A00BD3A23 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0A34F81A269C952A00BD3A23 /* Kingfisher */; };
 		0A5AAD6F268EE78D0097E0A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5AAD6E268EE78D0097E0A8 /* AppDelegate.swift */; };
@@ -74,7 +74,7 @@
 		0A2189D526AA75E0004E93A4 /* TableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSection.swift; sourceTree = "<group>"; };
 		0A2189D726AA8D30004E93A4 /* UIButton+UnderlineTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UnderlineTitle.swift"; sourceTree = "<group>"; };
 		0A2189D926AA8E4D004E93A4 /* GameFullDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFullDescriptionViewController.swift; sourceTree = "<group>"; };
-		0A3440F326B7B43100D79505 /* FavoriteEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmptyViewController.swift; sourceTree = "<group>"; };
+		0A3440F326B7B43100D79505 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		0A3440F526B7BA5000D79505 /* RAWG-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RAWG-Info.plist"; sourceTree = "<group>"; };
 		0A5AAD6B268EE78D0097E0A8 /* GWAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GWAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5AAD6E268EE78D0097E0A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				0A857F372691B97300DD1AE5 /* LoadingViewController.swift */,
-				0A3440F326B7B43100D79505 /* FavoriteEmptyViewController.swift */,
+				0A3440F326B7B43100D79505 /* EmptyViewController.swift */,
 			);
 			path = StateControllers;
 			sourceTree = "<group>";
@@ -369,7 +369,7 @@
 				0A768A8426B6E0FA005BCA04 /* FavoriteGameCoreData.swift in Sources */,
 				0A5AAD8F268F4BD80097E0A8 /* SearchViewController.swift in Sources */,
 				0A12E4BE269F0E8D00F6374F /* URLRequest+RAWG.swift in Sources */,
-				0A3440F426B7B43100D79505 /* FavoriteEmptyViewController.swift in Sources */,
+				0A3440F426B7B43100D79505 /* EmptyViewController.swift in Sources */,
 				0A768A8126B6C8B5005BCA04 /* GameForCoreData.swift in Sources */,
 				0A12E4C4269F0F0400F6374F /* GamePlatform.swift in Sources */,
 				0A2189D626AA75E0004E93A4 /* TableViewSection.swift in Sources */,

@@ -11,6 +11,7 @@ class GameSearchResultsViewController: UIViewController {
   
   private let favoriteGameCoreData = FavoriteGameCoreData()
   private let loadingViewController = LoadingViewController()
+  private let emptyViewController = EmptyViewController()
   
   private var games = [Game]()
   private var favoriteGameIds = [Int]()
@@ -33,6 +34,15 @@ class GameSearchResultsViewController: UIViewController {
     super.viewDidLoad()
     
     retrieveGameFavoriteIds()
+  }
+  
+  func addEmptyViewController(searchValue: String) {
+    emptyViewController.titleLabel.text = "Game \(searchValue) is not found"
+    addViewControllerChild(emptyViewController)
+  }
+  
+  func removeEmptyViewController() {
+    removeViewControllerChild(emptyViewController)
   }
 }
 
@@ -57,6 +67,10 @@ extension GameSearchResultsViewController {
           strongSelf.games = decoded.results
           strongSelf.gameView?.tableView.reloadData()
           strongSelf.removeViewControllerChild(strongSelf.loadingViewController)
+          
+          if decoded.results.count < 1 {
+            strongSelf.addEmptyViewController(searchValue: searchValue)
+          }
         }
       } catch {
         print("fetchGames - ERROR:", error)

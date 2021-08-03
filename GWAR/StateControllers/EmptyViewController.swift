@@ -1,5 +1,5 @@
 //
-//  FavoriteEmptyViewController.swift
+//  EmptyViewController.swift
 //  GWAR
 //
 //  Created by Kevin Hermawan on 02/08/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteEmptyViewController: UIViewController {
+class EmptyViewController: UIViewController {
   
   override func loadView() {
     super.loadView()
@@ -26,7 +26,6 @@ class FavoriteEmptyViewController: UIViewController {
     label.numberOfLines = 0
     label.textAlignment = .center
     label.font = UIFont.preferredFont(forTextStyle: .headline)
-    label.text = "No Favorite Games"
     
     return label
   }()
@@ -35,7 +34,6 @@ class FavoriteEmptyViewController: UIViewController {
     let label = UILabel()
     label.numberOfLines = 0
     label.textAlignment = .center
-    label.text = "Let's add your favorite games by swipe right in the game list!"
     
     return label
   }()

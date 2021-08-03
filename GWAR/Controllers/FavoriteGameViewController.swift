@@ -12,7 +12,7 @@ class FavoriteGameViewController: UIViewController {
   
   private let favoriteGameCoreData = FavoriteGameCoreData()
   private let loadingViewController = LoadingViewController()
-  private let favoriteEmptyViewController = FavoriteEmptyViewController()
+  private let favoriteEmptyViewController = EmptyViewController()
   
   private var games = [GameForCoreData]()
   
@@ -41,7 +41,7 @@ class FavoriteGameViewController: UIViewController {
     
     let gamesFromCoreData = favoriteGameCoreData.retrieve()
     games = gamesFromCoreData
-        
+    
     checkSizeOfGames()
     gameView?.tableView.reloadData()
   }
@@ -54,6 +54,9 @@ class FavoriteGameViewController: UIViewController {
   
   func checkSizeOfGames() {
     if games.count < 1 {
+      favoriteEmptyViewController.titleLabel.text = "No Favorite Games"
+      favoriteEmptyViewController.descLabel.text = "Let's add your favorite games by swipe right in the game list!"
+      
       addViewControllerChild(favoriteEmptyViewController)
     } else {
       removeViewControllerChild(favoriteEmptyViewController)

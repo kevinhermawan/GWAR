@@ -105,11 +105,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Search Bar Delegate
 extension SearchViewController: UISearchBarDelegate {
+  func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    let searchResultsVC = self.searchController.searchResultsController as? GameSearchResultsViewController
+    searchResultsVC?.removeEmptyViewController()
+  }
+  
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchBar.resignFirstResponder()
     
     if let searchValue = searchBar.text {
       let searchResultsVC = self.searchController.searchResultsController as? GameSearchResultsViewController
+      searchResultsVC?.removeEmptyViewController()
       searchResultsVC?.fetchGames(searchValue: searchValue)
     }
   }
